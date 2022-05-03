@@ -3,7 +3,11 @@ package com.ytaocrow.shop.dao;
 import com.ytaocrow.shop.dto.ProductRequest;
 import com.ytaocrow.shop.model.Product;
 
+import java.util.List;
+
 public interface ProductDao {
+
+    List<Product> getProducts();
 
     Product getProductById(Integer productId);
 
