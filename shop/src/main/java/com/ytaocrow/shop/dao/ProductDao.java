@@ -1,5 +1,6 @@
 package com.ytaocrow.shop.dao;
 
+import com.ytaocrow.shop.constant.ProductCategory;
 import com.ytaocrow.shop.dto.ProductRequest;
 import com.ytaocrow.shop.model.Product;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface ProductDao {
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category, String search);
 
     Product getProductById(Integer productId);
 
