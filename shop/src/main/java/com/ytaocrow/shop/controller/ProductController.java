@@ -8,11 +8,15 @@ import com.ytaocrow.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
+@Validated
 @RestController
 public class ProductController {
 
@@ -28,7 +32,11 @@ public class ProductController {
 
             //排序 sorting
             @RequestParam(defaultValue = "created_date") String orderBy,
-            @RequestParam(defaultValue = "desc") String sort
+            @RequestParam(defaultValue = "desc") String sort,
+
+            //分頁 Pagination
+            @RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit,
+            @RequestParam(defaultValue = "0") @Min(0) Integer offset
     ){
 
         ProductsQueryParams productsQueryParams = new ProductsQueryParams();
@@ -36,6 +44,8 @@ public class ProductController {
         productsQueryParams.setSearch(search);
         productsQueryParams.setOrderBy(orderBy);
         productsQueryParams.setSort(sort);
+        productsQueryParams.setLimit(limit);
+        productsQueryParams.setOffset(offset);
 
        List<Product> productList = productService.getProducts(productsQueryParams);
 
