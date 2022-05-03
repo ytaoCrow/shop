@@ -5,6 +5,7 @@ import com.ytaocrow.shop.dto.ProductRequest;
 import com.ytaocrow.shop.dto.ProductsQueryParams;
 import com.ytaocrow.shop.model.Product;
 import com.ytaocrow.shop.service.ProductService;
+import com.ytaocrow.shop.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
 
             //查詢條件
             @RequestParam(required = false) ProductCategory category,
@@ -47,9 +48,20 @@ public class ProductController {
         productsQueryParams.setLimit(limit);
         productsQueryParams.setOffset(offset);
 
-       List<Product> productList = productService.getProducts(productsQueryParams);
+        //取得Product list
+        List<Product> productList = productService.getProducts(productsQueryParams);
 
-       return  ResponseEntity.status(HttpStatus.OK).body(productList);
+       //取得product 總數
+       Integer total = productService.countProduct(productsQueryParams);
+
+       //分頁
+       Page<Product> page = new Page<>();
+       page.setLimit(limit);
+       page.setOffset(offset);
+       page.setTotal(total);
+       page.setResults(productList);
+
+       return  ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
     @GetMapping("/products/{productId}")
