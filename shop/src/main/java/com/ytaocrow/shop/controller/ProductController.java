@@ -2,6 +2,7 @@ package com.ytaocrow.shop.controller;
 
 import com.ytaocrow.shop.constant.ProductCategory;
 import com.ytaocrow.shop.dto.ProductRequest;
+import com.ytaocrow.shop.dto.ProductsQueryParams;
 import com.ytaocrow.shop.model.Product;
 import com.ytaocrow.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,12 @@ public class ProductController {
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search
     ){
-       List<Product> productList = productService.getProducts(category, search);
+
+        ProductsQueryParams productsQueryParams = new ProductsQueryParams();
+        productsQueryParams.setCategory(category);
+        productsQueryParams.setSearch(search);
+
+       List<Product> productList = productService.getProducts(productsQueryParams);
 
        return  ResponseEntity.status(HttpStatus.OK).body(productList);
     }

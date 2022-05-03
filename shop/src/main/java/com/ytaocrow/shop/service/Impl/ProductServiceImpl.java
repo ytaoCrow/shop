@@ -1,8 +1,9 @@
 package com.ytaocrow.shop.service.Impl;
 
-import com.ytaocrow.shop.constant.ProductCategory;
+
 import com.ytaocrow.shop.dao.ProductDao;
 import com.ytaocrow.shop.dto.ProductRequest;
+import com.ytaocrow.shop.dto.ProductsQueryParams;
 import com.ytaocrow.shop.model.Product;
 import com.ytaocrow.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class ProductServiceImpl  implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
-        return productDao.getProducts(category, search);
+    public List<Product> getProducts(ProductsQueryParams productsQueryParams) {
+        return productDao.getProducts(productsQueryParams);
     }
 
     @Override
