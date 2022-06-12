@@ -1,5 +1,6 @@
 package com.ytaocrow.shop.controller;
 
+import com.ytaocrow.shop.dto.UserLoginRequest;
 import com.ytaocrow.shop.dto.UserRegisterRequest;
 import com.ytaocrow.shop.model.User;
 import com.ytaocrow.shop.service.UserService;
@@ -27,5 +28,12 @@ public class UserController {
 
         return  ResponseEntity.status(HttpStatus.CREATED).body(user);
 
+    }
+
+    @PostMapping("/users/login")
+    public  ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest){
+       User user =  userService.login(userLoginRequest);
+
+       return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }
