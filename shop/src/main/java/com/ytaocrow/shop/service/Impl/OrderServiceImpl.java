@@ -18,6 +18,16 @@ import java.util.List;
 @Component
 public class OrderServiceImpl implements OrderService {
 
+    @Override
+    public Order getOrderById(Integer orderId) {
+        Order order = orderDao.getOrderById(orderId);
+
+        List<OrderItem> orderItemList = orderDao.getOrderItemByOrderId(orderId);
+
+        order.setOrderItemList(orderItemList);
+        return order;
+    }
+
     @Autowired
     private OrderDao orderDao;
     @Autowired

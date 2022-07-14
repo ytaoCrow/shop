@@ -1,6 +1,7 @@
 package com.ytaocrow.shop.controller;
 
 import com.ytaocrow.shop.dto.CreateOrderRequest;
+import com.ytaocrow.shop.model.Order;
 import com.ytaocrow.shop.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,10 @@ public class OrderController {
                                          @RequestBody @Valid CreateOrderRequest createOrderRequest){
 
         Integer orderId = orderService.createOrder(userId, createOrderRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
+
+        Order order = orderService.getOrderById(orderId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
 }

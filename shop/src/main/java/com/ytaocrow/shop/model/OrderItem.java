@@ -1,6 +1,8 @@
 package com.ytaocrow.shop.model;
 
 public class OrderItem {
+    private String productName;
+    private String imageUrl;
     private Integer orderItemId;
     private Integer orderId;
     private Integer productId;
@@ -45,5 +47,21 @@ public class OrderItem {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
