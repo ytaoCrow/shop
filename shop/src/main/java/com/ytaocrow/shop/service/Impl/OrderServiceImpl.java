@@ -5,6 +5,7 @@ import com.ytaocrow.shop.dao.ProductDao;
 import com.ytaocrow.shop.dao.UserDao;
 import com.ytaocrow.shop.dto.Buyitem;
 import com.ytaocrow.shop.dto.CreateOrderRequest;
+import com.ytaocrow.shop.dto.OrderQueryParams;
 import com.ytaocrow.shop.model.Order;
 import com.ytaocrow.shop.model.OrderItem;
 import com.ytaocrow.shop.model.Product;
@@ -44,6 +45,23 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private UserDao userDao;
 
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        return orderDao.countOrder(orderQueryParams);
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        List<Order> orderList = orderDao.getOrders(orderQueryParams);
+
+        for (Order order  : orderList){
+            List<OrderItem> orderItemList = orderDao.getOrderItemByOrderId(order.getOrderId());
+
+            order.setOrderItemList(orderItemList);
+        }
+        return orderList;
+    }
+
     @Transactional
     @Override
     public Integer createOrder(Integer userId, CreateOrderRequest createOrderRequest) {
@@ -51,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
         User user = userDao.getUserById(userId);
 
         if(user == null){
-            log.warn("該 userID {} 不存在",userId);
+            log.warn("該 userId {} 不存在", userId);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
